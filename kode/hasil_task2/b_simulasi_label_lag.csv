@@ -1,0 +1,6 @@
+model,pr_auc,roc_auc,cost_rule_juta,n_flag,n_train
+Label lengkap (oracle),0.7869,0.9922,37.63,450,247407
+"Label tertunda, dipakai apa adanya",0.7455,0.9897,49.59,246,247407
+"Label tertunda, buang 3 minggu terakhir",0.7936,0.9923,39.87,383,212787
+"Label tertunda, buang 1 minggu terakhir",0.7714,0.9912,42.88,309,235699
+"Label tertunda, 3 minggu terakhir: simpan positif, buang negatif",0.766,0.9915,40.75,1118,212871

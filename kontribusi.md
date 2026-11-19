@@ -9,7 +9,7 @@
 | No | Nama Lengkap | NIM | Kelas | Peran Utama | Akun GitHub |
 |---|---|---|---|---|---|
 | 1 | **Fransisco Sitepu** | **101032300004** | **TK 47 03** | **Task 1 (Regression) & Task 3 (Clustering)** | [@Frans1828](https://github.com/Frans1828) |
-| 2 | **Ahmad Ghazali El-Faruqi HSB** | **101032330080** | **TK 47 03** | **Task 2 (Classification)** | [@ahmadghazali](https://github.com/ahmadghazali) |
+| 2 | **Ahmad Ghazali El-Faruqi HSB** | **101032330080** | **TK 47 03** | **Task 2 (Classification)** | [@AhmadGhazaliELFaruqiHsb](https://github.com/AhmadGhazaliELFaruqiHsb) |
 
 ---
 
@@ -37,12 +37,16 @@
 
 ### B. Ahmad Ghazali El-Faruqi HSB (NIM: 101032330080)
 - **Task 2 – Classification (Fraud Detection)**:
-  - Melakukan audit label dan audit ketersediaan fitur saat transaksi terjadi (*pre-transaction* vs *post-transaction review*).
-  - Merancang validasi berbasis waktu (*time-based validation*) guna menangani *reporting lag* pada label fraud.
-  - Melakukan rekayasa fitur perilaku (*behavioral velocity features*) dari riwayat pengguna dan merchant.
-  - Menangani ketidakseimbangan kelas ekstrem (~0.62% fraud) melalui perbandingan *class weighting*, *resampling*, dan *threshold tuning*.
-  - Menerapkan aturan keputusan berbasis matriks biaya: menandai transaksi jika ekspektasi kerugian fraud melampaui biaya peninjauan manual ($Rp 25.000$).
-  - Mengembangkan baseline dan model klasifikasi serta menghasilkan `prediksi_klasifikasi.csv` (106.674 transaksi).
+  - Audit label: mengukur *reporting lag* (kematangan label 3 minggu terakhir Agustus 68% / 52% / 14%).
+  - Audit fitur: membuktikan kebocoran `flag_review_manual` (PR-AUC semu 0,926 → 0,774 saat flag belum tersedia) dan membuang `v15` (proksi waktu); seleksi fitur anonim `v**` di dalam fold latih.
+  - Validasi berbasis waktu (Fold A: Feb–Jun → Juli, Fold B: Feb–Jul → 1–10 Agustus), perbandingan dengan split acak, serta simulasi label lag untuk memilih strategi data latih.
+  - Rekayasa fitur perilaku pengguna & merchant tanpa informasi masa depan (jendela waktu 24 jam / 7 hari / 30 hari).
+  - Perbandingan penanganan ketidakseimbangan kelas: tanpa penanganan, *class weighting*, *random undersampling*, *random oversampling*, dan *threshold tuning*.
+  - Analisis pergeseran pola fraud (lonjakan fraud QRIS di merchant baru sejak Agustus 2025) dan adaptasi dengan bobot *recency*.
+  - Kalibrasi probabilitas out-of-time (Platt vs isotonic) dan aturan keputusan berbasis biaya, dibandingkan dengan "tandai semua" dan "tidak tandai".
+  - Analisis galat per kanal, kategori merchant, dan pola fraud.
+  - Menghasilkan `prediksi_klasifikasi.csv`, `kode/hasil_task2/`, dan halaman Task 2 di `laporan.pdf` (via `kode/laporan_task2.py`).
+- **Pull request**: [daftar PR Ahmad ke repo kelompok](https://github.com/Frans1828/UTS-Machine-Learning/pulls?q=is%3Apr+author%3AAhmadGhazaliELFaruqiHsb)
 
 ---
 
@@ -56,7 +60,9 @@ Sesuai dengan ketentuan ujian: *"AI tools: allowed. State the tool, the parts it
    - Membantu eksplorasi matematis formulasi *Lagrange Multiplier* dan penurunan metrik *Pinball Loss*.
    - Membantu *brainstorming* rekayasa fitur komposisional (metodologi *Centered Log-Ratio* / CLR dari Aitchison).
    - Membantu penulisan kerangka kode otomatisasi dan perapian struktur laporan akademis.
+   - Task 2: Claude (Anthropic) membantu menyusun kode pipeline `kode/task2_classification.py`, generator laporan `kode/laporan_task2.py`, dan draf teks bagian Task 2.
 3. **Metode Verifikasi oleh Anggota**:
+   - Task 2: setiap angka di laporan dibaca langsung dari `kode/hasil_task2/ringkasan_task2.json` dan tabel CSV yang dihasilkan kode; format `prediksi_klasifikasi.csv` dicek otomatis (106.674 baris unik, `prob` di [0,1], `tandai` 0/1).
    - Semua angka, metrik validasi (MAE, Pinball loss, cakupan kuantil, skor Silhouette, ARI), dan tabel yang dilaporkan dieksekusi secara independen dan diverifikasi langsung pada dataset lokal.
    - Tidak ada angka atau prediksi yang dihasilkan secara fiktif; seluruh file `prediksi_regresi.csv`, `prediksi_klasifikasi.csv`, dan `cluster.csv` diproduksi secara deterministik melalui kode Python yang dapat direproduksi penuh dengan satu perintah (`python kode/run_all.py`).
 

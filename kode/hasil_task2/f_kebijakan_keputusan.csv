@@ -1,0 +1,6 @@
+kebijakan,n_tandai,biaya_juta
+Tidak tandai sama sekali,0,138.53
+Tandai semua transaksi,17437,435.93
+Ambang prob 0.5,96,79.35
+"Ambang prob global tuned (0.0128, optimis)",341,42.56
+Aturan biaya: p x nominal >= 25.000,216,39.27

@@ -1,0 +1,888 @@
+{
+  "n_train": 403077,
+  "n_test": 106674,
+  "prevalensi_train": 0.65,
+  "label_lag_minggu": {
+    "2025-06-02/2025-06-08": 83.2,
+    "2025-06-09/2025-06-15": 71.1,
+    "2025-06-16/2025-06-22": 88.3,
+    "2025-06-23/2025-06-29": 88.8,
+    "2025-06-30/2025-07-06": 135.2,
+    "2025-07-07/2025-07-13": 105.6,
+    "2025-07-14/2025-07-20": 82.0,
+    "2025-07-21/2025-07-27": 79.5,
+    "2025-07-28/2025-08-03": 106.0,
+    "2025-08-04/2025-08-10": 105.4,
+    "2025-08-11/2025-08-17": 68.1,
+    "2025-08-18/2025-08-24": 52.3,
+    "2025-08-25/2025-08-31": 13.5
+  },
+  "flag_review": {
+    "rate_train_pct": 1.71,
+    "rate_test_pct": 1.23,
+    "fraud_rate_if_flag1_pct": 30.37,
+    "fraud_rate_if_flag0_pct": 0.133,
+    "share_fraud_flagged_pct": 79.9,
+    "auc_univariat": 0.8935
+  },
+  "v15_mean_per_bulan": {
+    "1": 0.145,
+    "2": 0.443,
+    "3": 0.73,
+    "4": 1.05,
+    "5": 1.35,
+    "6": 1.65,
+    "7": 1.955,
+    "8": 2.266,
+    "9": 2.58,
+    "10": 2.878
+  },
+  "v15_auc_univariat": 0.5102,
+  "missing_pct": {
+    "menit_sejak_trx_terakhir": 25.46,
+    "rasio_nominal_rata2": 25.46
+  },
+  "fold": {
+    "A_train_FebJun": {
+      "n": 247407,
+      "fraud": 1709
+    },
+    "A_val_Jul": {
+      "n": 52334,
+      "fraud": 341
+    },
+    "B_train_FebJul": {
+      "n": 299741,
+      "fraud": 2050
+    },
+    "B_val_1_10Agu": {
+      "n": 17437,
+      "fraud": 137
+    }
+  },
+  "v_terpilih": {
+    "v03": 0.639,
+    "v11": 0.575,
+    "v19": 0.572,
+    "v26": 0.535,
+    "v29": 0.544,
+    "v38": 0.597,
+    "v42": 0.572
+  },
+  "v_dibuang_n": 43,
+  "n_fitur": {
+    "raw": 35,
+    "full": 61
+  },
+  "kebocoran": [
+    {
+      "model": "Dengan flag_review_manual (semu)",
+      "pr_auc": 0.9256,
+      "roc_auc": 0.9985,
+      "cost_rule_juta": 16.05,
+      "n_flag": 348
+    },
+    {
+      "model": "Model bocor saat flag belum ada (=0)",
+      "pr_auc": 0.7741,
+      "roc_auc": 0.9907,
+      "cost_rule_juta": 45.92,
+      "n_flag": 242
+    },
+    {
+      "model": "Tanpa flag_review_manual (jujur)",
+      "pr_auc": 0.7869,
+      "roc_auc": 0.9922,
+      "cost_rule_juta": 37.63,
+      "n_flag": 450
+    }
+  ],
+  "random_vs_waktu": {
+    "random_split_pr_auc": 0.855,
+    "time_split_pr_auc": 0.7869
+  },
+  "simulasi_lag": [
+    {
+      "model": "Label lengkap (oracle)",
+      "pr_auc": 0.7869,
+      "roc_auc": 0.9922,
+      "cost_rule_juta": 37.63,
+      "n_flag": 450,
+      "n_train": 247407
+    },
+    {
+      "model": "Label tertunda, dipakai apa adanya",
+      "pr_auc": 0.7455,
+      "roc_auc": 0.9897,
+      "cost_rule_juta": 49.59,
+      "n_flag": 246,
+      "n_train": 247407
+    },
+    {
+      "model": "Label tertunda, buang 3 minggu terakhir",
+      "pr_auc": 0.7936,
+      "roc_auc": 0.9923,
+      "cost_rule_juta": 39.87,
+      "n_flag": 383,
+      "n_train": 212787
+    },
+    {
+      "model": "Label tertunda, buang 1 minggu terakhir",
+      "pr_auc": 0.7714,
+      "roc_auc": 0.9912,
+      "cost_rule_juta": 42.88,
+      "n_flag": 309,
+      "n_train": 235699
+    },
+    {
+      "model": "Label tertunda, 3 minggu terakhir: simpan positif, buang negatif",
+      "pr_auc": 0.766,
+      "roc_auc": 0.9915,
+      "cost_rule_juta": 40.75,
+      "n_flag": 1118,
+      "n_train": 212871
+    }
+  ],
+  "simulasi_lag_label_dihapus": 125,
+  "model": [
+    {
+      "model": "Baseline: Logistic Regression (fitur mentah)",
+      "pr_auc": 0.6153,
+      "roc_auc": 0.9553,
+      "cost_rule_juta": 62.53,
+      "n_flag": 1000,
+      "fold": "A"
+    },
+    {
+      "model": "LightGBM fitur mentah",
+      "pr_auc": 0.774,
+      "roc_auc": 0.9854,
+      "cost_rule_juta": 41.93,
+      "n_flag": 607,
+      "fold": "A"
+    },
+    {
+      "model": "LightGBM + fitur perilaku",
+      "pr_auc": 0.7869,
+      "roc_auc": 0.9922,
+      "cost_rule_juta": 37.63,
+      "n_flag": 450,
+      "fold": "A"
+    },
+    {
+      "model": "Baseline: Logistic Regression (fitur mentah)",
+      "pr_auc": 0.4463,
+      "roc_auc": 0.8847,
+      "cost_rule_juta": 61.88,
+      "n_flag": 310,
+      "fold": "B"
+    },
+    {
+      "model": "LightGBM fitur mentah",
+      "pr_auc": 0.4933,
+      "roc_auc": 0.9126,
+      "cost_rule_juta": 54.33,
+      "n_flag": 213,
+      "fold": "B"
+    },
+    {
+      "model": "LightGBM + fitur perilaku",
+      "pr_auc": 0.5306,
+      "roc_auc": 0.9647,
+      "cost_rule_juta": 47.27,
+      "n_flag": 160,
+      "fold": "B"
+    }
+  ],
+  "imbalance": [
+    {
+      "fold": "A",
+      "metode": "1. Tanpa penanganan",
+      "pr_auc": 0.7869,
+      "roc_auc": 0.9922,
+      "brier": 0.00226,
+      "biaya_ambang_0_5_juta": 64.42,
+      "biaya_aturan_biaya_mentah_juta": 37.63,
+      "biaya_threshold_tuned_juta": 38.23,
+      "threshold_tuned": 0.0232
+    },
+    {
+      "fold": "A",
+      "metode": "2. Class weighting (spw=neg/pos)",
+      "pr_auc": 0.7707,
+      "roc_auc": 0.9918,
+      "brier": 0.00436,
+      "biaya_ambang_0_5_juta": 41.02,
+      "biaya_aturan_biaya_mentah_juta": 42.67,
+      "biaya_threshold_tuned_juta": 39.21,
+      "threshold_tuned": 0.2903
+    },
+    {
+      "fold": "A",
+      "metode": "3. Random undersampling 1:20",
+      "pr_auc": 0.7756,
+      "roc_auc": 0.9917,
+      "brier": 0.00291,
+      "biaya_ambang_0_5_juta": 42.95,
+      "biaya_aturan_biaya_mentah_juta": 39.78,
+      "biaya_threshold_tuned_juta": 38.92,
+      "threshold_tuned": 0.1351
+    },
+    {
+      "fold": "A",
+      "metode": "4. Random oversampling x20",
+      "pr_auc": 0.8012,
+      "roc_auc": 0.9936,
+      "brier": 0.00255,
+      "biaya_ambang_0_5_juta": 42.1,
+      "biaya_aturan_biaya_mentah_juta": 37.99,
+      "biaya_threshold_tuned_juta": 37.03,
+      "threshold_tuned": 0.1611
+    },
+    {
+      "fold": "B",
+      "metode": "1. Tanpa penanganan",
+      "pr_auc": 0.5306,
+      "roc_auc": 0.9647,
+      "brier": 0.00502,
+      "biaya_ambang_0_5_juta": 80.44,
+      "biaya_aturan_biaya_mentah_juta": 47.27,
+      "biaya_threshold_tuned_juta": 46.83,
+      "threshold_tuned": 0.0114
+    },
+    {
+      "fold": "B",
+      "metode": "2. Class weighting (spw=neg/pos)",
+      "pr_auc": 0.4651,
+      "roc_auc": 0.9568,
+      "brier": 0.00797,
+      "biaya_ambang_0_5_juta": 73.91,
+      "biaya_aturan_biaya_mentah_juta": 46.18,
+      "biaya_threshold_tuned_juta": 53.32,
+      "threshold_tuned": 0.0503
+    },
+    {
+      "fold": "B",
+      "metode": "3. Random undersampling 1:20",
+      "pr_auc": 0.4743,
+      "roc_auc": 0.9674,
+      "brier": 0.00556,
+      "biaya_ambang_0_5_juta": 77.23,
+      "biaya_aturan_biaya_mentah_juta": 44.21,
+      "biaya_threshold_tuned_juta": 49.15,
+      "threshold_tuned": 0.0511
+    },
+    {
+      "fold": "B",
+      "metode": "4. Random oversampling x20",
+      "pr_auc": 0.4818,
+      "roc_auc": 0.9442,
+      "brier": 0.00589,
+      "biaya_ambang_0_5_juta": 77.76,
+      "biaya_aturan_biaya_mentah_juta": 49.59,
+      "biaya_threshold_tuned_juta": 55.55,
+      "threshold_tuned": 0.038
+    }
+  ],
+  "pola_qris_agustus": {
+    "n_fraud_qris_per_bulan": {
+      "1": 13,
+      "2": 15,
+      "3": 16,
+      "4": 12,
+      "5": 13,
+      "6": 13,
+      "7": 10,
+      "8": 92
+    },
+    "profil_median": {
+      "fraud_qris_agustus": {
+        "nominal": 1487400.0,
+        "umur_merchant_hari": 19.0,
+        "volume_merchant_30h": 46.0,
+        "persen_saldo": 3.7,
+        "umur_perangkat_hari": 1064.1,
+        "umur_akun_hari": 1158.0,
+        "m_trx_30h": 2.0
+      },
+      "fraud_jan_jul": {
+        "nominal": 344800.0,
+        "umur_merchant_hari": 716.0,
+        "volume_merchant_30h": 402.0,
+        "persen_saldo": 0.8,
+        "umur_perangkat_hari": 84.1,
+        "umur_akun_hari": 505.0,
+        "m_trx_30h": 7.0
+      },
+      "non_fraud": {
+        "nominal": 127600.0,
+        "umur_merchant_hari": 954.0,
+        "volume_merchant_30h": 383.0,
+        "persen_saldo": 0.4,
+        "umur_perangkat_hari": 702.8,
+        "umur_akun_hari": 866.0,
+        "m_trx_30h": 88.0
+      }
+    },
+    "test_trx_qris_merchant_muda": 926,
+    "train_trx_qris_merchant_muda_feb_jul": 2358
+  },
+  "recency": [
+    {
+      "half_life_hari": "tanpa bobot",
+      "pr_auc": 0.5306,
+      "roc_auc": 0.9647,
+      "pr_auc_qris": 0.2987,
+      "biaya_aturan_juta": 47.27
+    },
+    {
+      "half_life_hari": 90,
+      "pr_auc": 0.5487,
+      "roc_auc": 0.9729,
+      "pr_auc_qris": 0.3757,
+      "biaya_aturan_juta": 46.21
+    },
+    {
+      "half_life_hari": 45,
+      "pr_auc": 0.5407,
+      "roc_auc": 0.9745,
+      "pr_auc_qris": 0.3837,
+      "biaya_aturan_juta": 51.67
+    }
+  ],
+  "half_life_terpilih": 90,
+  "kalibrasi": [
+    {
+      "kalibrasi": "Mentah",
+      "brier": 0.004959,
+      "rata2_prob": 0.00556,
+      "rate_aktual": 0.00786,
+      "pr_auc": 0.5487,
+      "biaya_aturan_juta": 46.21,
+      "n_tandai": 155
+    },
+    {
+      "kalibrasi": "Platt",
+      "brier": 0.004812,
+      "rata2_prob": 0.00672,
+      "rate_aktual": 0.00786,
+      "pr_auc": 0.5487,
+      "biaya_aturan_juta": 42.39,
+      "n_tandai": 211
+    },
+    {
+      "kalibrasi": "Isotonic (+tie-break)",
+      "brier": 0.004677,
+      "rata2_prob": 0.00682,
+      "rate_aktual": 0.00786,
+      "pr_auc": 0.5487,
+      "biaya_aturan_juta": 39.27,
+      "n_tandai": 216
+    }
+  ],
+  "kalibrasi_terpilih": "Isotonic (+tie-break)",
+  "keputusan_foldB": [
+    {
+      "kebijakan": "Tidak tandai sama sekali",
+      "n_tandai": 0,
+      "biaya_juta": 138.53
+    },
+    {
+      "kebijakan": "Tandai semua transaksi",
+      "n_tandai": 17437,
+      "biaya_juta": 435.93
+    },
+    {
+      "kebijakan": "Ambang prob 0.5",
+      "n_tandai": 96,
+      "biaya_juta": 79.35
+    },
+    {
+      "kebijakan": "Ambang prob global tuned (0.0128, optimis)",
+      "n_tandai": 341,
+      "biaya_juta": 42.56
+    },
+    {
+      "kebijakan": "Aturan biaya: p x nominal >= 25.000",
+      "n_tandai": 216,
+      "biaya_juta": 39.27
+    }
+  ],
+  "keputusan_foldA": {
+    "tidak_tandai_juta": 347.6,
+    "tandai_semua_juta": 1308.35,
+    "aturan_biaya_juta": 33.13,
+    "n_tandai": 635
+  },
+  "galat_kanal": [
+    {
+      "kanal": "kartu",
+      "n": 8684.0,
+      "fraud": 146.0,
+      "tandai": 202.0,
+      "recall": 0.726,
+      "precision": 0.525,
+      "fraud_lolos_juta": 4.96,
+      "biaya_review_juta": 5.05,
+      "pr_auc": 0.819
+    },
+    {
+      "kanal": "aplikasi",
+      "n": 31106.0,
+      "fraud": 99.0,
+      "tandai": 241.0,
+      "recall": 0.626,
+      "precision": 0.257,
+      "fraud_lolos_juta": 5.7,
+      "biaya_review_juta": 6.02,
+      "pr_auc": 0.706
+    },
+    {
+      "kanal": "va",
+      "n": 10380.0,
+      "fraud": 98.0,
+      "tandai": 177.0,
+      "recall": 0.878,
+      "precision": 0.486,
+      "fraud_lolos_juta": 2.56,
+      "biaya_review_juta": 4.42,
+      "pr_auc": 0.697
+    },
+    {
+      "kanal": "web",
+      "n": 4285.0,
+      "fraud": 79.0,
+      "tandai": 111.0,
+      "recall": 0.772,
+      "precision": 0.55,
+      "fraud_lolos_juta": 2.85,
+      "biaya_review_juta": 2.78,
+      "pr_auc": 0.874
+    },
+    {
+      "kanal": "qris",
+      "n": 15316.0,
+      "fraud": 56.0,
+      "tandai": 120.0,
+      "recall": 0.464,
+      "precision": 0.217,
+      "fraud_lolos_juta": 35.05,
+      "biaya_review_juta": 3.0,
+      "pr_auc": 0.2
+    }
+  ],
+  "galat_kategori_merchant": [
+    {
+      "kategori_merchant": "elektronik",
+      "n": 7443.0,
+      "fraud": 69.0,
+      "tandai": 196.0,
+      "recall": 0.87,
+      "precision": 0.306,
+      "fraud_lolos_juta": 7.17,
+      "biaya_review_juta": 4.9,
+      "pr_auc": 0.79
+    },
+    {
+      "kategori_merchant": "voucher_game",
+      "n": 3235.0,
+      "fraud": 67.0,
+      "tandai": 68.0,
+      "recall": 0.791,
+      "precision": 0.779,
+      "fraud_lolos_juta": 0.23,
+      "biaya_review_juta": 1.7,
+      "pr_auc": 0.799
+    },
+    {
+      "kategori_merchant": "toko_online",
+      "n": 5612.0,
+      "fraud": 57.0,
+      "tandai": 45.0,
+      "recall": 0.474,
+      "precision": 0.6,
+      "fraud_lolos_juta": 3.95,
+      "biaya_review_juta": 1.12,
+      "pr_auc": 0.664
+    },
+    {
+      "kategori_merchant": "pulsa_data",
+      "n": 6670.0,
+      "fraud": 49.0,
+      "tandai": 28.0,
+      "recall": 0.51,
+      "precision": 0.893,
+      "fraud_lolos_juta": 0.42,
+      "biaya_review_juta": 0.7,
+      "pr_auc": 0.837
+    },
+    {
+      "kategori_merchant": "gadget",
+      "n": 2932.0,
+      "fraud": 45.0,
+      "tandai": 139.0,
+      "recall": 0.844,
+      "precision": 0.273,
+      "fraud_lolos_juta": 3.73,
+      "biaya_review_juta": 3.48,
+      "pr_auc": 0.664
+    },
+    {
+      "kategori_merchant": "top_up_ewallet",
+      "n": 3655.0,
+      "fraud": 43.0,
+      "tandai": 62.0,
+      "recall": 0.907,
+      "precision": 0.629,
+      "fraud_lolos_juta": 1.1,
+      "biaya_review_juta": 1.55,
+      "pr_auc": 0.938
+    },
+    {
+      "kategori_merchant": "fashion",
+      "n": 4690.0,
+      "fraud": 26.0,
+      "tandai": 101.0,
+      "recall": 0.654,
+      "precision": 0.168,
+      "fraud_lolos_juta": 2.2,
+      "biaya_review_juta": 2.52,
+      "pr_auc": 0.45
+    },
+    {
+      "kategori_merchant": "emas",
+      "n": 1082.0,
+      "fraud": 26.0,
+      "tandai": 77.0,
+      "recall": 0.885,
+      "precision": 0.299,
+      "fraud_lolos_juta": 0.69,
+      "biaya_review_juta": 1.92,
+      "pr_auc": 0.737
+    },
+    {
+      "kategori_merchant": "makanan_minuman",
+      "n": 10222.0,
+      "fraud": 22.0,
+      "tandai": 20.0,
+      "recall": 0.818,
+      "precision": 0.9,
+      "fraud_lolos_juta": 2.16,
+      "biaya_review_juta": 0.5,
+      "pr_auc": 0.908
+    },
+    {
+      "kategori_merchant": "jasa_lainnya",
+      "n": 1591.0,
+      "fraud": 21.0,
+      "tandai": 11.0,
+      "recall": 0.429,
+      "precision": 0.818,
+      "fraud_lolos_juta": 20.45,
+      "biaya_review_juta": 0.28,
+      "pr_auc": 0.497
+    },
+    {
+      "kategori_merchant": "kecantikan",
+      "n": 3038.0,
+      "fraud": 17.0,
+      "tandai": 34.0,
+      "recall": 0.294,
+      "precision": 0.147,
+      "fraud_lolos_juta": 2.04,
+      "biaya_review_juta": 0.85,
+      "pr_auc": 0.346
+    },
+    {
+      "kategori_merchant": "hotel",
+      "n": 2483.0,
+      "fraud": 7.0,
+      "tandai": 15.0,
+      "recall": 0.714,
+      "precision": 0.333,
+      "fraud_lolos_juta": 0.66,
+      "biaya_review_juta": 0.38,
+      "pr_auc": 0.805
+    },
+    {
+      "kategori_merchant": "rumah_tangga",
+      "n": 2652.0,
+      "fraud": 6.0,
+      "tandai": 4.0,
+      "recall": 0.5,
+      "precision": 0.75,
+      "fraud_lolos_juta": 2.43,
+      "biaya_review_juta": 0.1,
+      "pr_auc": 0.451
+    },
+    {
+      "kategori_merchant": "kesehatan",
+      "n": 2330.0,
+      "fraud": 5.0,
+      "tandai": 5.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.12,
+      "pr_auc": 1.0
+    },
+    {
+      "kategori_merchant": "tiket_perjalanan",
+      "n": 1869.0,
+      "fraud": 5.0,
+      "tandai": 19.0,
+      "recall": 0.8,
+      "precision": 0.211,
+      "fraud_lolos_juta": 1.3,
+      "biaya_review_juta": 0.48,
+      "pr_auc": 0.762
+    },
+    {
+      "kategori_merchant": "tagihan_listrik",
+      "n": 2520.0,
+      "fraud": 4.0,
+      "tandai": 6.0,
+      "recall": 0.75,
+      "precision": 0.5,
+      "fraud_lolos_juta": 1.1,
+      "biaya_review_juta": 0.15,
+      "pr_auc": 0.755
+    },
+    {
+      "kategori_merchant": "otomotif",
+      "n": 1571.0,
+      "fraud": 3.0,
+      "tandai": 5.0,
+      "recall": 0.667,
+      "precision": 0.4,
+      "fraud_lolos_juta": 1.3,
+      "biaya_review_juta": 0.12,
+      "pr_auc": 0.685
+    },
+    {
+      "kategori_merchant": "pendidikan",
+      "n": 482.0,
+      "fraud": 2.0,
+      "tandai": 3.0,
+      "recall": 0.5,
+      "precision": 0.333,
+      "fraud_lolos_juta": 0.17,
+      "biaya_review_juta": 0.08,
+      "pr_auc": 0.505
+    },
+    {
+      "kategori_merchant": "tagihan_air",
+      "n": 850.0,
+      "fraud": 2.0,
+      "tandai": 3.0,
+      "recall": 1.0,
+      "precision": 0.667,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.08,
+      "pr_auc": 1.0
+    },
+    {
+      "kategori_merchant": "olahraga",
+      "n": 907.0,
+      "fraud": 1.0,
+      "tandai": 6.0,
+      "recall": 1.0,
+      "precision": 0.167,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.15,
+      "pr_auc": 1.0
+    },
+    {
+      "kategori_merchant": "ibu_bayi",
+      "n": 1543.0,
+      "fraud": 1.0,
+      "tandai": 1.0,
+      "recall": 1.0,
+      "precision": 1.0,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.02,
+      "pr_auc": 1.0
+    },
+    {
+      "kategori_merchant": "hobi",
+      "n": 933.0,
+      "fraud": 0.0,
+      "tandai": 1.0,
+      "recall": NaN,
+      "precision": 0.0,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.02,
+      "pr_auc": NaN
+    },
+    {
+      "kategori_merchant": "donasi",
+      "n": 920.0,
+      "fraud": 0.0,
+      "tandai": 0.0,
+      "recall": NaN,
+      "precision": NaN,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.0,
+      "pr_auc": NaN
+    },
+    {
+      "kategori_merchant": "asuransi",
+      "n": 541.0,
+      "fraud": 0.0,
+      "tandai": 2.0,
+      "recall": NaN,
+      "precision": 0.0,
+      "fraud_lolos_juta": 0.0,
+      "biaya_review_juta": 0.05,
+      "pr_auc": NaN
+    }
+  ],
+  "galat_pola": [
+    {
+      "pola": "Kartu tidak hadir (CNP)",
+      "n": 9075.0,
+      "fraud": 182.0,
+      "tandai": 234.0,
+      "recall": 0.714,
+      "precision": 0.556,
+      "fraud_lolos_juta": 7.32,
+      "biaya_review_juta": 5.85,
+      "pr_auc": 0.838
+    },
+    {
+      "pola": "Lainnya",
+      "n": 52604.0,
+      "fraud": 112.0,
+      "tandai": 377.0,
+      "recall": 0.688,
+      "precision": 0.204,
+      "fraud_lolos_juta": 17.91,
+      "biaya_review_juta": 9.43,
+      "pr_auc": 0.433
+    },
+    {
+      "pola": "Perangkat baru",
+      "n": 2531.0,
+      "fraud": 104.0,
+      "tandai": 119.0,
+      "recall": 0.788,
+      "precision": 0.689,
+      "fraud_lolos_juta": 1.4,
+      "biaya_review_juta": 2.98,
+      "pr_auc": 0.902
+    },
+    {
+      "pola": "QRIS merchant muda (<60 hari)",
+      "n": 452.0,
+      "fraud": 33.0,
+      "tandai": 26.0,
+      "recall": 0.455,
+      "precision": 0.577,
+      "fraud_lolos_juta": 22.85,
+      "biaya_review_juta": 0.65,
+      "pr_auc": 0.471
+    },
+    {
+      "pola": "Lokasi jauh (>100 km)",
+      "n": 1811.0,
+      "fraud": 26.0,
+      "tandai": 42.0,
+      "recall": 0.808,
+      "precision": 0.5,
+      "fraud_lolos_juta": 0.5,
+      "biaya_review_juta": 1.05,
+      "pr_auc": 0.923
+    },
+    {
+      "pola": "Transaksi malam (00-05)",
+      "n": 3298.0,
+      "fraud": 21.0,
+      "tandai": 53.0,
+      "recall": 0.762,
+      "precision": 0.302,
+      "fraud_lolos_juta": 1.14,
+      "biaya_review_juta": 1.32,
+      "pr_auc": 0.483
+    }
+  ],
+  "strategi_lag_terpilih": "Label tertunda, buang 3 minggu terakhir",
+  "final_train_end": "2025-08-10",
+  "final": {
+    "n_train": 317178,
+    "fraud_train": 2187,
+    "prob_rata2_test": 0.00733,
+    "n_tandai_test": 1518,
+    "pct_tandai_test": 1.42,
+    "biaya_review_test_juta": 37.95
+  },
+  "top_fitur": [
+    {
+      "fitur": "menit_sejak_trx_terakhir",
+      "gain_pct": 15.39
+    },
+    {
+      "fitur": "perangkat_baru",
+      "gain_pct": 9.8
+    },
+    {
+      "fitur": "nominal",
+      "gain_pct": 7.34
+    },
+    {
+      "fitur": "m_trx_24j",
+      "gain_pct": 5.02
+    },
+    {
+      "fitur": "m_nom_rata2_30h",
+      "gain_pct": 4.92
+    },
+    {
+      "fitur": "kategori_merchant",
+      "gain_pct": 4.87
+    },
+    {
+      "fitur": "m_user_unik_prev",
+      "gain_pct": 4.74
+    },
+    {
+      "fitur": "gagal_login_24j",
+      "gain_pct": 3.62
+    },
+    {
+      "fitur": "jarak_lokasi_km",
+      "gain_pct": 2.8
+    },
+    {
+      "fitur": "u_nom_over_max",
+      "gain_pct": 2.47
+    },
+    {
+      "fitur": "persen_saldo",
+      "gain_pct": 2.43
+    },
+    {
+      "fitur": "umur_merchant_hari",
+      "gain_pct": 2.41
+    },
+    {
+      "fitur": "ganti_password_7h",
+      "gain_pct": 2.38
+    },
+    {
+      "fitur": "m_rasio_nominal_30h",
+      "gain_pct": 1.87
+    },
+    {
+      "fitur": "refund_merchant_30h",
+      "gain_pct": 1.82
+    }
+  ],
+  "library": {
+    "lightgbm": "4.7.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.3",
+    "sklearn": "1.9.1",
+    "seed": 42
+  },
+  "durasi_detik": 404.9
+}

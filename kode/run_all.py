@@ -5,7 +5,7 @@ Authors: Fransisco Sitepu (101032300004) & Ahmad Ghazali El-Faruqi HSB (10103233
 =============================================================================
 This script runs the entire machine learning pipeline in sequence:
 - Task 1: Regression (Delivery Time Estimation: P50 & P90 with Conformal Calibration)
-- Task 2: Classification (Fraud Detection Baseline & Cost-sensitive Flagging)
+- Task 2: Classification (Fraud Detection: leakage/label-lag audit, behavioral features, calibration & cost rule)
 - Task 3: Clustering (Customer Segmentation: CLR Preprocessing & K-Means K=5)
 =============================================================================
 """
@@ -17,6 +17,7 @@ import time
 from task1_regression import run_task1
 from task2_classification import run_task2
 from task3_clustering import run_task3
+from laporan_task2 import run as build_report_task2
 
 def main():
     print("=" * 80)
@@ -60,6 +61,7 @@ def main():
     t0 = time.time()
     print(">>> RUNNING TASK 2: CLASSIFICATION (FRAUD DETECTION)...")
     run_task2(data_dir=data_dir, output_dir=repo_root)
+    build_report_task2(os.path.join(repo_root, "laporan.pdf"))  # perbarui bagian Task 2 di laporan.pdf
     print(f">>> Task 2 completed in {time.time() - t0:.1f}s\n")
 
     # Run Task 3

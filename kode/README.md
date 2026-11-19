@@ -11,7 +11,7 @@
 - **Python**: 3.10+ atau 3.11+
 - **Library Utama**:
   ```bash
-  pip install pandas numpy scikit-learn lightgbm scipy fpdf2
+  pip install pandas numpy scikit-learn lightgbm scipy fpdf2 pypdf matplotlib
   ```
 
 ---
@@ -29,7 +29,7 @@ python kode/run_all.py
 Perintah di atas secara otomatis akan:
 1. Memuat seluruh dataset dari direktori data lokal.
 2. Menjalankan **Task 1** (Audit kebocoran `jumlah_scan`, validasi berbasis waktu Jan–Jun vs Jul–Agu, pelatihan model kuantil LightGBM P50 dan P90, kalibrasi *Conformal Prediction*, dan menghasilkan `prediksi_regresi.csv`).
-3. Menjalankan **Task 2** (Pelatihan klasifikasi deteksi fraud dengan *class weighting* & aturan keputusan berbasis biaya, menghasilkan `prediksi_klasifikasi.csv`).
+3. Menjalankan **Task 2** (audit label lag & kebocoran `flag_review_manual`, validasi berbasis waktu, fitur perilaku pengguna/merchant tanpa informasi masa depan, perbandingan penanganan imbalance, analisis pergeseran pola, kalibrasi out-of-time, aturan keputusan berbasis biaya, analisis galat; menghasilkan `prediksi_klasifikasi.csv`, seluruh tabel/grafik di `kode/hasil_task2/`, lalu memperbarui bagian Task 2 di `laporan.pdf` lewat `kode/laporan_task2.py`).
 4. Menjalankan **Task 3** (Transformasi data komposisional *Centered Log-Ratio* (CLR), deteksi anomali *Isolation Forest*, *K-Means* $K=5$, uji stabilitas *Adjusted Rand Index*, dan menghasilkan `cluster.csv`).
 
 ---
@@ -46,9 +46,13 @@ python kode/task1_regression.py
 
 ### Task 2: Klasifikasi Deteksi Fraud
 ```bash
-python kode/task2_classification.py
+python kode/task2_classification.py            # opsional: path folder data sebagai argumen
+python kode/laporan_task2.py                   # perbarui halaman Task 2 di laporan.pdf dari hasil di atas
 ```
 - Output: `prediksi_klasifikasi.csv` (kolom: `id_transaksi`, `prob`, `tandai`)
+- Semua angka laporan Task 2: `kode/hasil_task2/ringkasan_task2.json` dan tabel `kode/hasil_task2/*.csv`
+- Grafik: `kode/hasil_task2/fig_task2_*.png`
+- Waktu eksekusi ± 7 menit (2 CPU), seed 42, deterministik.
 
 ### Task 3: Klasterisasi Segmentasi Pelanggan
 ```bash

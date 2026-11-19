@@ -1,0 +1,7 @@
+model,pr_auc,roc_auc,cost_rule_juta,n_flag,fold
+Baseline: Logistic Regression (fitur mentah),0.6153,0.9553,62.53,1000,A
+LightGBM fitur mentah,0.774,0.9854,41.93,607,A
+LightGBM + fitur perilaku,0.7869,0.9922,37.63,450,A
+Baseline: Logistic Regression (fitur mentah),0.4463,0.8847,61.88,310,B
+LightGBM fitur mentah,0.4933,0.9126,54.33,213,B
+LightGBM + fitur perilaku,0.5306,0.9647,47.27,160,B

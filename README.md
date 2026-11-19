@@ -30,6 +30,8 @@ UTS-Machine-Learning/
 └── kode/                         # Seluruh skrip pipeline dan modul implementasi
     ├── task1_regression.py       # Pipeline Task 1 (Regresi Estimasi Waktu Pengiriman)
     ├── task2_classification.py   # Pipeline Task 2 (Klasifikasi Deteksi Fraud)
+    ├── laporan_task2.py          # Generator halaman Task 2 di laporan.pdf dari hasil_task2/
+    ├── hasil_task2/              # Semua tabel, grafik & ringkasan angka Task 2
     ├── task3_clustering.py       # Pipeline Task 3 (Klasterisasi Segmentasi Pelanggan)
     ├── run_all.py                # Skrip master untuk reproduksi penuh satu perintah
     └── README.md                 # Petunjuk instalasi dependencies & eksekusi kode
@@ -55,12 +57,18 @@ UTS-Machine-Learning/
   - File output: `prediksi_regresi.csv` (60.000 baris, terverifikasi $P90 \ge P50$ 100%).
 
 ### Task 2: Deteksi Transaksi Fraud (Classification)
-- **Target**: Memprediksi probabilitas `is_fraud` transaksi September–Oktober 2025 dan menentukan transaksi yang wajib ditandai (`tandai = 1`).
-- **Penanganan Ketidakseimbangan Ekstrem**:
-  - Prevalensi fraud hanya **0.62%**. Menggunakan *cost-sensitive weighting* (`scale_pos_weight = 10.0`).
-- **Aturan Keputusan Berbasis Biaya**:
-  - Biaya peninjauan manual: Rp 25.000 per transaksi. Transaksi ditandai jika nilai ekspektasi kerugian fraud melampaui biaya peninjauan: $P(\text{fraud}) \times \text{nominal} \ge 25.000$.
-- **File output**: `prediksi_klasifikasi.csv` (106.674 transaksi).
+- **Target**: Memprediksi probabilitas `is_fraud` transaksi September–Oktober 2025 dan menentukan transaksi yang ditandai (`tandai = 1`). Data latih 403.077 transaksi (prevalensi fraud **0,65%**), data uji 106.674 transaksi.
+- **Audit Label & Fitur**:
+  - *Label lag*: kematangan label 3 minggu terakhir Agustus hanya **68% → 52% → 14%** dari tingkat fraud normal (fraud belum dilaporkan saat data ditarik).
+  - *Kebocoran* `flag_review_manual` (hasil tinjauan manual setelah transaksi; 79,9% fraud ber-flag 1): PR-AUC semu **0,926**, tetapi saat flag belum ada turun ke **0,774** dan biayanya lebih buruk dari model jujur. Kolom dibuang.
+  - `v15` adalah proksi waktu (naik linear tiap bulan, AUC 0,51) → dibuang; hanya 7 dari 49 fitur anonim `v**` yang informatif dipertahankan.
+- **Validasi Berbasis Waktu**: Fold A (latih Feb–Jun, validasi Juli) dan Fold B (latih Feb–Jul, validasi 1–10 Agustus). Split acak terlalu optimis (PR-AUC 0,855 vs 0,787). Simulasi label lag menunjukkan strategi terbaik adalah **membuang 3 minggu terakhir yang labelnya belum matang** (model final dilatih 1 Feb–10 Agu).
+- **Fitur Perilaku** (tanpa informasi masa depan): riwayat pengguna (rata-rata/maks nominal sebelumnya, merchant/kategori/kanal baru) dan riwayat merchant (jumlah & nominal transaksi 24 jam/7 hari/30 hari, pengguna unik, umur merchant di data). Baseline logistic regression PR-AUC 0,615 → LightGBM + fitur perilaku **0,787** (Fold A) / **0,531** (Fold B).
+- **Ketidakseimbangan Kelas**: dibandingkan tanpa penanganan, *class weighting*, *random undersampling* 1:20, *random oversampling* ×20, plus *threshold tuning*. Resampling/weighting tidak konsisten menaikkan PR-AUC dan merusak kalibrasi; yang paling menentukan biaya adalah ambang berbasis biaya.
+- **Pergeseran Pola**: fraud QRIS melonjak dari 10–16 kasus/bulan menjadi **92 kasus di Agustus** — merchant QRIS baru (median umur 19 hari) yang menguras saldo akun lama. Adaptasi: fitur riwayat merchant, bobot *recency* (half-life 90 hari, PR-AUC Fold B 0,531 → 0,549), dan kalibrasi out-of-time.
+- **Kalibrasi & Keputusan**: kalibrasi isotonic (+ tie-break agar urutan skor tetap) dilatih pada Juli, diuji pada Agustus. Aturan: tandai jika $P(\text{fraud}) \times \text{nominal} \ge 25.000$. Di Fold B: tidak tandai Rp 138,5 jt, tandai semua Rp 435,9 jt, **aturan biaya Rp 39,3 jt**.
+- **Analisis Galat**: kuat pada pola lama (kartu tidak hadir, perangkat baru, lokasi jauh; PR-AUC > 0,8); kelemahan utama pada pola baru QRIS merchant muda (recall ~0,45).
+- **File output**: `prediksi_klasifikasi.csv` (106.674 transaksi) dan seluruh tabel/grafik di `kode/hasil_task2/`.
 
 ### Task 3: Segmentasi Pelanggan E-Commerce (Clustering)
 - **Dataset**: 120.000 pelanggan, ringkasan 90 hari terakhir.

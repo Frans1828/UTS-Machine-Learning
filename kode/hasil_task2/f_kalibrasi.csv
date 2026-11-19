@@ -1,0 +1,4 @@
+kalibrasi,brier,rata2_prob,rate_aktual,pr_auc,biaya_aturan_juta,n_tandai
+Mentah,0.004959,0.00556,0.00786,0.5487,46.21,155
+Platt,0.004812,0.00672,0.00786,0.5487,42.39,211
+Isotonic (+tie-break),0.004677,0.00682,0.00786,0.5487,39.27,216

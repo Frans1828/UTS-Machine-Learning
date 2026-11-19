@@ -1,0 +1,8 @@
+,fraud_qris_agustus,fraud_jan_jul,non_fraud
+nominal,1487400.0,344800.0,127600.0
+umur_merchant_hari,19.0,716.0,954.0
+volume_merchant_30h,46.0,402.0,383.0
+persen_saldo,3.7,0.8,0.4
+umur_perangkat_hari,1064.1,84.1,702.8
+umur_akun_hari,1158.0,505.0,866.0
+m_trx_30h,2.0,7.0,88.0

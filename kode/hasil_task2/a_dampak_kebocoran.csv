@@ -1,0 +1,4 @@
+model,pr_auc,roc_auc,cost_rule_juta,n_flag
+Dengan flag_review_manual (semu),0.9256,0.9985,16.05,348
+Model bocor saat flag belum ada (=0),0.7741,0.9907,45.92,242
+Tanpa flag_review_manual (jujur),0.7869,0.9922,37.63,450
