@@ -227,7 +227,8 @@ def task3(d):
         f"persentase tetap): {th(an['n'])} pelanggan ({pct(an['pct'], 2)}) -> cluster = -1. {pct(an['pct_di_atas_p99_minimal_satu_fitur'])} "
         f"di antaranya berada di atas persentil 99 pada minimal satu fitur. Median sesi_per_minggu anomali {num(pm['sesi_per_minggu'][0], 1)} vs "
         f"{num(pm['sesi_per_minggu'][1], 1)} pada pelanggan normal dengan rasio konversi {num(pm['rasio_konversi'][0], 2)} vs "
-        f"{num(pm['rasio_konversi'][1], 2)}: pola bot/scraper, plus pembeli grosir (item & belanja ekstrem). Anomali dikeluarkan sebelum "
+        f"{num(pm['rasio_konversi'][1], 2)}: pola mirip bot/scraper (sesi sangat banyak, konversi sangat rendah). "
+        f"Median belanja_90h anomali juga lebih tinggi (Rp {th(pm['belanja_90h'][0])} vs Rp {th(pm['belanja_90h'][1])}). Anomali dikeluarkan sebelum "
         "memilih K dan melatih model agar centroid tidak tertarik pencilan.")
 
     d.h2("3.4 Jumlah Klaster (d)")
